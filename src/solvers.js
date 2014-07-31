@@ -14,7 +14,11 @@
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
 
 window.findNRooksSolution = function(n) {
-  var solution = undefined; //fixme
+  var solution = [];
+  for(var i = 0; i < n; i++){
+
+
+  }
 
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
@@ -24,8 +28,34 @@ window.findNRooksSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  var solutionCount = 0;
+  var result = [];
+  var makeArray = function(n) {
+    var arr = [];
+    for (var i = 0; i < n; i++) {
+      arr.push(0);
+    }
+    return arr;
+  };
 
+  var makeSolutions = function(rows) {
+    if (rows === 0) {
+      var board = new Board(result);
+      if (board.hasAnyColConflicts() === false && board.hasAnyRowConflicts() === false) {
+        solutionCount++;
+      }
+      return;
+    }
+    for (var i = 0; i < n; i++) {
+      var holder = makeArray(n);
+      holder[i]++;
+      result.push(holder);
+      makeSolutions(rows - 1);
+      result.pop();
+    }
+  };
+
+  makeSolutions(n);
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
 };
@@ -43,8 +73,35 @@ window.findNQueensSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
 window.countNQueensSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  var solutionCount = 0;
+  var result = [];
+  var makeArray = function(n) {
+    var arr = [];
+    for (var i = 0; i < n; i++) {
+      arr.push(0);
+    }
+    return arr;
+  };
 
+  var makeSolutions = function(rows) {
+    if (rows === 0) {
+      var board = new Board(result);
+      if (board.hasAnyColConflicts() === false && board.hasAnyRowConflicts() === false && board.hasAnyMajorDiagonalConflicts() === false && board.hasAnyMinorDiagonalConflicts() === false) {
+        solutionCount++;
+      }
+      return;
+    }
+    for (var i = 0; i < n; i++) {
+      var holder = makeArray(n);
+      holder[i]++;
+      result.push(holder);
+      makeSolutions(rows - 1);
+      result.pop();
+    }
+  };
+
+  makeSolutions(n);
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
+
 };
