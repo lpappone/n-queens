@@ -178,12 +178,10 @@
       //console.log(this)
       var count = 0;
       var currentRow;
-      for(var i = 0; i <= column; i++){
-        //console.log("Current row: ", row+i);
-        if(this.get(row+i) !== undefined){
-          currentRow = this.get(row+i);
-          count += currentRow[column-i];
-        }
+      for(var i = 0; i <= column-row; i++){
+        //console.log("Current row: ", row+i
+        currentRow = this.get(row+i);
+        count += currentRow[column-i];
         //console.log("Current col: ", column-i);
         if(count > 1){
           return true;
@@ -195,7 +193,7 @@
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
       var n = this.get("n");
-      for(var i = 0; i < n-2; i++){
+      for(var i = 0; i < n-1; i++){
       console.log("i: ",i)
         if(this.hasMinorDiagonalConflictAt(n-1, i)){
           return true;

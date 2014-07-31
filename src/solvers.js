@@ -38,7 +38,7 @@ window.countNRooksSolutions = function(n) {
     return arr;
   };
 
-  var makeSolutions = function(rows) {
+  var makeSolutions = function(rows, a) {
     if (rows === 0) {
       var board = new Board(result);
       if (board.hasAnyColConflicts() === false && board.hasAnyRowConflicts() === false) {
@@ -46,16 +46,20 @@ window.countNRooksSolutions = function(n) {
       }
       return;
     }
-    for (var i = 0; i < n; i++) {
+    for (var i = 0; i < n-a; i++) {
       var holder = makeArray(n);
-      holder[i]++;
+      holder[i+a]++;
       result.push(holder);
-      makeSolutions(rows - 1);
+      if (i === 0) {
+        makeSolutions(rows-1, a + 1);
+      } else {
+        makeSolutions(rows-1, 0);
+      }
       result.pop();
     }
   };
 
-  makeSolutions(n);
+  makeSolutions(n, 0);
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
 };
@@ -83,7 +87,11 @@ window.countNQueensSolutions = function(n) {
     return arr;
   };
 
-  var makeSolutions = function(rows) {
+  // var worker1 = new Worker('solver1.js');
+  // var worker2 = new Worker('solver2.js');
+
+
+  var makeSolutions = function(rows, a) {
     if (rows === 0) {
       var board = new Board(result);
       if (board.hasAnyColConflicts() === false && board.hasAnyRowConflicts() === false && board.hasAnyMajorDiagonalConflicts() === false && board.hasAnyMinorDiagonalConflicts() === false) {
@@ -91,16 +99,20 @@ window.countNQueensSolutions = function(n) {
       }
       return;
     }
-    for (var i = 0; i < n; i++) {
+    for (var i = 0; i < n-a; i++) {
       var holder = makeArray(n);
-      holder[i]++;
+      holder[i+a]++;
       result.push(holder);
-      makeSolutions(rows - 1);
+      if (i === 0) {
+        makeSolutions(rows-1, a + 1);
+      } else {
+        makeSolutions(rows-1, 0);
+      }
       result.pop();
     }
   };
 
-  makeSolutions(n);
+  makeSolutions(n, 0);
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
 
